@@ -1,0 +1,190 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Vectorize
+providerId: vectorize-io
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- AI
+- RAG
+- Vectorization
+- Embeddings
+- Retrieval
+- Vector Database
+- Plans
+description: >-
+  Vectorize prices its RAG platform in subscription tiers keyed to the number of
+  RAG pipelines and monthly page-processing volume, with a Forever Free tier, a
+  paid Starter tier, a paid Professional tier, and a custom Enterprise tier. Plans
+  bundle the built-in vector database, automatic vector-index syncing, vision-model
+  PDF processing, source connectors, and retrieval queries. The Vectorize API is
+  available across paid tiers and the same access token authorizes every endpoint.
+notes: >-
+  Tier names and headline limits as published on the Vectorize pricing page;
+  verify current pricing, page allowances, and per-tier feature gates at
+  vectorize.io / platform.vectorize.io during reconciliation, as the RAG platform
+  pricing is iterated frequently.
+sources:
+- https://vectorize.io/
+- https://platform.vectorize.io
+- https://docs.vectorize.io
+plans:
+- id: vectorize-free
+  name: Free
+  type: free
+  description: >-
+    Forever Free tier for developers building side projects and learning RAG.
+    One simple RAG pipeline, automatic vector-index syncing, limited vision-model
+    PDF processing, and community support.
+  entries:
+  - label: RAG Pipelines
+    name: pipelines
+    type: included
+    metric: pipelines
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Pages Processed
+    name: pages
+    type: included
+    metric: pages
+    limit: 1500
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Vector Search Queries
+    name: queries
+    type: included
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included (see plan limits)
+    userMultiplied: false
+  elements:
+  - name: Built-in Vector Database
+  - name: Automatic Index Syncing
+  - name: Limited Vision Model PDF Processing
+  - name: Community Support
+- id: vectorize-starter
+  name: Starter
+  type: paid
+  description: >-
+    Paid entry tier for small production workloads. Multiple RAG pipelines with a
+    higher monthly page-processing allowance and standard support.
+  entries:
+  - label: Monthly Subscription
+    name: subscription
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $89 per month
+    userMultiplied: false
+  - label: RAG Pipelines
+    name: pipelines
+    type: included
+    metric: pipelines
+    limit: 3
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Pages Processed
+    name: pages
+    type: included
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included up to plan allowance, then usage-based
+    userMultiplied: false
+  elements:
+  - name: Built-in Vector Database
+  - name: Automatic Index Syncing
+  - name: Vision Model PDF Processing
+  - name: Source Connectors
+  - name: Retrieval Endpoint
+- id: vectorize-professional
+  name: Professional
+  type: paid
+  description: >-
+    Paid tier for larger production RAG deployments with more pipelines and
+    hourly index updates.
+  entries:
+  - label: Monthly Subscription
+    name: subscription
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $399 per month
+    userMultiplied: false
+  - label: RAG Pipelines
+    name: pipelines
+    type: included
+    metric: pipelines
+    limit: 10
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Pages Processed
+    name: pages
+    type: included
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included up to plan allowance, then usage-based
+    userMultiplied: false
+  elements:
+  - name: Built-in Vector Database
+  - name: Hourly Index Updates
+  - name: Vision Model PDF Processing
+  - name: Source / Destination / AI Platform Connectors
+  - name: Retrieval Endpoint
+  - name: Iris Extraction
+  - name: Deep Research
+- id: vectorize-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom tier for high-volume and regulated deployments. Volume page and
+    pipeline commitments, private / dedicated infrastructure, SSO, dedicated
+    support, and negotiated terms. Contact Vectorize sales.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Dedicated / Private Deployment
+  - name: SSO and RBAC
+  - name: Dedicated Support and SLA
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

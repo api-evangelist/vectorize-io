@@ -1,0 +1,80 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Vectorize
+providerId: vectorize-io
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- AI
+- RAG
+- Vectorization
+- Embeddings
+- Retrieval
+- Vector Database
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  The Vectorize API is organization-scoped and Bearer-authenticated. Practical
+  usage is governed primarily by subscription-tier quotas - number of RAG
+  pipelines, monthly pages processed, and index update frequency - rather than
+  granular per-second request ceilings published in the documentation. Specific
+  per-endpoint request rate limits for retrieval, extraction, and deep research
+  are not reconciled in this artifact and should be confirmed with Vectorize, as
+  the API is in Beta and breaking changes may occur.
+notes: >-
+  Verify request-rate limits, pipeline / page quotas, and any concurrency caps on
+  retrieval, Iris extraction, and deep research in the Vectorize platform console
+  and developer docs on reconciliation; quotas scale with the Free / Starter /
+  Professional / Enterprise tier.
+sources:
+- https://docs.vectorize.io/reference/api/api-getting-started/
+- https://docs.vectorize.io
+- https://vectorize.io/
+responseCodes:
+  throttled: 429
+limits:
+- name: RAG Pipelines
+  scope: organization
+  metric: pipelines
+  limit: see plan (1 Free / 3 Starter / 10 Professional / custom Enterprise)
+  notes: Maximum concurrent RAG pipelines per organization, set by subscription tier.
+- name: Pages Processed
+  scope: organization
+  metric: pages
+  limit: see plan (1,500/month Free; higher on paid tiers)
+  notes: Monthly document page-processing allowance for ingestion / extraction.
+- name: Index Update Frequency
+  scope: pipeline
+  metric: schedule
+  limit: see plan (hourly on Professional)
+  notes: How often a pipeline refreshes its vector index, gated by tier.
+- name: Retrieval Requests
+  scope: organization
+  metric: requests
+  limit: see provider documentation
+  notes: Per-pipeline retrieval query volume; specific rate not documented.
+- name: Extraction Jobs
+  scope: organization
+  metric: jobs
+  limit: see provider documentation
+  notes: Iris extraction jobs run asynchronously; poll the result endpoint until ready.
+- name: Deep Research Runs
+  scope: organization
+  metric: jobs
+  limit: see provider documentation
+  notes: Deep research runs are asynchronous; poll for the report by researchId.
+policies:
+- name: Tiered Quotas
+  description: Pipeline counts, page allowances, and update frequency raise as accounts move from Free to Starter to Professional to Enterprise.
+- name: Asynchronous Polling
+  description: Extraction and deep research are async; clients poll the result endpoint until ready is true rather than holding a long connection.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on 429 responses and honor Retry-After when present.
+- name: Beta Stability
+  description: The API is in Beta; breaking changes may occur, so clients should pin client-library versions and monitor changelogs.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

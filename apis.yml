@@ -1,0 +1,163 @@
+aid: vectorize-io
+url: https://raw.githubusercontent.com/api-evangelist/vectorize-io/refs/heads/main/apis.yml
+name: Vectorize
+kind: company
+description: Vectorize is a RAG (retrieval-augmented generation) pipeline platform that
+  ingests unstructured data, chunks and embeds it, and serves low-latency retrieval
+  against a managed vector database. The Vectorize API lets developers create, start,
+  and stop RAG pipelines, run retrieval, manage source / destination / AI-platform
+  connectors, upload files, extract documents with Iris, and run deep research.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- AI
+- RAG
+- Vectorization
+- Embeddings
+- Retrieval
+- Vector Database
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: vectorize-io:vectorize-pipelines-api
+  name: Vectorize Pipelines API
+  tags:
+  - RAG
+  - Pipelines
+  - Ingest
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  properties:
+  - url: https://docs.vectorize.io/build-deploy/data-pipelines/
+    type: Documentation
+  - url: https://docs.vectorize.io/reference/api/api-getting-started/
+    type: APIReference
+  - url: openapi/vectorize-io-openapi.yml
+    type: OpenAPI
+  - url: collections/vectorize-io.postman_collection.json
+    type: PostmanCollection
+  description: Create, list, retrieve, start, stop, and delete organization-scoped RAG
+    pipelines that wire source connectors, an AI-platform embedding connector, and a
+    destination vector database together, plus pipeline events and metrics.
+- aid: vectorize-io:vectorize-retrieval-api
+  name: Vectorize Retrieval API
+  tags:
+  - Retrieval
+  - Search
+  - Reranking
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  baseURL: https://api.vectorize.io/v1
+  properties:
+  - url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+    type: Documentation
+  - url: https://docs.vectorize.io/reference/api/api-getting-started/
+    type: APIReference
+  - url: openapi/vectorize-io-openapi.yml
+    type: OpenAPI
+  - url: collections/vectorize-io.postman_collection.json
+    type: PostmanCollection
+  description: Per-pipeline retrieval endpoint that vectorizes the input question, runs
+    a k-ANN search against the pipeline's vector index, applies optional reranking and
+    metadata filters, and returns ranked document chunks with relevancy scores.
+- aid: vectorize-io:vectorize-connectors-api
+  name: Vectorize Connectors API
+  tags:
+  - Connectors
+  - Sources
+  - Destinations
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  properties:
+  - url: https://docs.vectorize.io/integrations/
+    type: Documentation
+  - url: https://docs.vectorize.io/reference/api/api-getting-started/
+    type: APIReference
+  - url: openapi/vectorize-io-openapi.yml
+    type: OpenAPI
+  - url: collections/vectorize-io.postman_collection.json
+    type: PostmanCollection
+  description: CRUD management of source connectors (data sources), destination connectors
+    (vector databases), and AI-platform connectors (embedding / model providers), plus
+    per-source user authorization for OAuth-style connectors.
+- aid: vectorize-io:vectorize-file-upload-api
+  name: Vectorize File Upload API
+  tags:
+  - Files
+  - Upload
+  - Storage
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  properties:
+  - url: https://docs.vectorize.io/build-deploy/data-sources/
+    type: Documentation
+  - url: https://docs.vectorize.io/reference/api/api-getting-started/
+    type: APIReference
+  - url: openapi/vectorize-io-openapi.yml
+    type: OpenAPI
+  - url: collections/vectorize-io.postman_collection.json
+    type: PostmanCollection
+  description: Upload generic files to the platform via a pre-signed URL flow, and push
+    or delete files against a File Upload source connector for ingestion into a pipeline.
+- aid: vectorize-io:vectorize-extraction-iris-api
+  name: Vectorize Extraction (Iris) API
+  tags:
+  - Extraction
+  - Iris
+  - Chunking
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+  baseURL: https://api.vectorize.io/v1
+  properties:
+  - url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+    type: Documentation
+  - url: https://docs.vectorize.io/reference/api/api-getting-started/
+    type: APIReference
+  - url: openapi/vectorize-io-openapi.yml
+    type: OpenAPI
+  - url: collections/vectorize-io.postman_collection.json
+    type: PostmanCollection
+  description: Vectorize Iris document extraction - start an extraction job against an
+    uploaded file to convert it into Markdown chunks with optional metadata, and poll
+    for the asynchronous extraction result.
+- aid: vectorize-io:vectorize-deep-research-api
+  name: Vectorize Deep Research API
+  tags:
+  - Deep Research
+  - Agents
+  - RAG
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  properties:
+  - url: https://docs.vectorize.io/build-deploy/data-pipelines/
+    type: Documentation
+  - url: https://docs.vectorize.io/reference/api/api-getting-started/
+    type: APIReference
+  - url: openapi/vectorize-io-openapi.yml
+    type: OpenAPI
+  - url: collections/vectorize-io.postman_collection.json
+    type: PostmanCollection
+  description: Start a private deep-research run grounded in a pipeline's vector index
+    (optionally augmented with web search) and poll for the generated research report.
+common:
+- type: GitHubOrganization
+  url: https://github.com/vectorize-io
+- type: LinkedIn
+  url: https://www.linkedin.com/company/vectorize-io
+- type: Website
+  url: https://vectorize.io/
+- type: Documentation
+  url: https://docs.vectorize.io
+- type: Plans
+  url: plans/vectorize-io-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/vectorize-io-rate-limits.yml
+- type: FinOps
+  url: finops/vectorize-io-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

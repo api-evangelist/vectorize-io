@@ -1,0 +1,546 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectorize API",
+    "version": "0.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all workspaces in an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/workspaces"
+          },
+          "docs": "Get all workspaces in an organization"
+        },
+        {
+          "info": {
+            "name": "Get a specific workspace by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/workspaces/{workspaceId}"
+          },
+          "docs": "Get a specific workspace by ID"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new pipeline"
+        },
+        {
+          "info": {
+            "name": "Get all pipelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines"
+          },
+          "docs": "Get all pipelines"
+        },
+        {
+          "info": {
+            "name": "Get a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}"
+          },
+          "docs": "Get a pipeline"
+        },
+        {
+          "info": {
+            "name": "Delete a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}"
+          },
+          "docs": "Delete a pipeline"
+        },
+        {
+          "info": {
+            "name": "Get pipeline events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/events"
+          },
+          "docs": "Get pipeline events"
+        },
+        {
+          "info": {
+            "name": "Get pipeline metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/metrics"
+          },
+          "docs": "Get pipeline metrics"
+        },
+        {
+          "info": {
+            "name": "Retrieve documents from a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/retrieval",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve documents from a pipeline"
+        },
+        {
+          "info": {
+            "name": "Start a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/start"
+          },
+          "docs": "Start a pipeline"
+        },
+        {
+          "info": {
+            "name": "Stop a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/stop"
+          },
+          "docs": "Stop a pipeline"
+        },
+        {
+          "info": {
+            "name": "Start a deep research",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/deep-research",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a deep research"
+        },
+        {
+          "info": {
+            "name": "Get deep research result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/deep-research/{researchId}"
+          },
+          "docs": "Get deep research result"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Source Connectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new source connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new source connector"
+        },
+        {
+          "info": {
+            "name": "Get all existing source connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources"
+          },
+          "docs": "Get all existing source connectors"
+        },
+        {
+          "info": {
+            "name": "Get a source connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}"
+          },
+          "docs": "Get a source connector"
+        },
+        {
+          "info": {
+            "name": "Update a source connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a source connector"
+        },
+        {
+          "info": {
+            "name": "Delete a source connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}"
+          },
+          "docs": "Delete a source connector"
+        },
+        {
+          "info": {
+            "name": "Add a user to a source connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a user to a source connector"
+        },
+        {
+          "info": {
+            "name": "Update a source connector user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a source connector user"
+        },
+        {
+          "info": {
+            "name": "Delete a source connector user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a source connector user"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Destination Connectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new destination connector"
+        },
+        {
+          "info": {
+            "name": "Get all existing destination connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations"
+          },
+          "docs": "Get all existing destination connectors"
+        },
+        {
+          "info": {
+            "name": "Get a destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations/{destinationConnectorId}"
+          },
+          "docs": "Get a destination connector"
+        },
+        {
+          "info": {
+            "name": "Update a destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations/{destinationConnectorId}",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a destination connector"
+        },
+        {
+          "info": {
+            "name": "Delete a destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations/{destinationConnectorId}"
+          },
+          "docs": "Delete a destination connector"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "AI Platform Connectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new AI platform connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new AI platform connector"
+        },
+        {
+          "info": {
+            "name": "Get all existing AI Platform connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms"
+          },
+          "docs": "Get all existing AI Platform connectors"
+        },
+        {
+          "info": {
+            "name": "Get an AI platform connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}"
+          },
+          "docs": "Get an AI platform connector"
+        },
+        {
+          "info": {
+            "name": "Update an AI Platform connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an AI Platform connector"
+        },
+        {
+          "info": {
+            "name": "Delete an AI platform connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}"
+          },
+          "docs": "Delete an AI platform connector"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Uploads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get uploaded files from a file upload connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/uploads/{connectorId}/files"
+          },
+          "docs": "Get uploaded files from a file upload connector"
+        },
+        {
+          "info": {
+            "name": "Upload a file to a file upload connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/uploads/{connectorId}/files",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload a file to a file upload connector"
+        },
+        {
+          "info": {
+            "name": "Delete a file from a File Upload connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/uploads/{connectorId}/files/{fileName}"
+          },
+          "docs": "Delete a file from a File Upload connector"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Extraction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start content extraction from a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/extraction",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start content extraction from a file"
+        },
+        {
+          "info": {
+            "name": "Get extraction result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/extraction/{extractionId}"
+          },
+          "docs": "Get extraction result"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a generic file to the platform",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/{organizationId}/files",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload a generic file to the platform"
+        }
+      ]
+    }
+  ]
+}

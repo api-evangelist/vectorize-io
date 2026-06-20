@@ -1,0 +1,120 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Vectorize
+providerId: vectorize-io
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- AI
+- RAG
+- Vectorization
+- Embeddings
+- Retrieval
+- Vector Database
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Vectorize RAG platform spend. Vectorize bills primarily through
+  subscription tiers (Free / Starter / Professional / Enterprise) keyed to the
+  number of RAG pipelines and monthly pages processed, plus the built-in vector
+  database, vision-model PDF processing, retrieval queries, Iris extraction, and
+  deep research. Cost drivers are page-processing volume (ingestion / extraction),
+  number and update frequency of pipelines, and retrieval query volume.
+notes: >-
+  Subscription prices and page allowances are subject to change; verify against
+  the Vectorize pricing page during reconciliation. The API is in Beta.
+sources:
+- https://vectorize.io/
+- https://platform.vectorize.io
+- https://docs.vectorize.io
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Vectorize
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Vectorize
+  ServiceCategory: AI and Machine Learning
+  ProviderName: Vectorize
+  PublisherName: Vectorize
+  InvoiceIssuerName: Vectorize
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: subscription_tier
+  description: Monthly subscription fee for the selected plan (Starter, Professional).
+  unit: subscription
+  aggregation: max
+  dimensions:
+  - organization
+  - plan
+- name: pipelines
+  description: Number of active RAG pipelines against the tier allowance.
+  unit: pipelines
+  aggregation: max
+  dimensions:
+  - organization
+  - pipeline
+- name: pages_processed
+  description: Document pages ingested / extracted per month, against the tier allowance.
+  unit: pages
+  aggregation: sum
+  dimensions:
+  - organization
+  - pipeline
+- name: retrieval_requests
+  description: Retrieval (vector search) queries issued against pipelines.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - organization
+  - pipeline
+- name: extraction_jobs
+  description: Iris document extraction jobs run via the Extraction API.
+  unit: jobs
+  aggregation: sum
+  dimensions:
+  - organization
+  - pipeline
+- name: deep_research_runs
+  description: Deep research runs grounded in a pipeline's vector index.
+  unit: jobs
+  aggregation: sum
+  dimensions:
+  - organization
+  - pipeline
+- name: vision_pages
+  description: Pages routed through vision-model processing for complex PDFs.
+  unit: pages
+  aggregation: sum
+  dimensions:
+  - organization
+  - pipeline
+principles:
+- name: Visibility
+  description: Track pages processed and pipeline count per month against tier allowances to anticipate the next tier or overage.
+- name: Allocation
+  description: Tag pipelines and access tokens per workload / team and map to internal cost centers.
+- name: Optimization
+  description: Right-size pipeline count and update frequency; tune chunkSize and reranking to control retrieval cost; reserve vision-model PDF processing for documents that need it.
+- name: Accountability
+  description: Assign owners per pipeline; review page-processing burn and subscription tier monthly against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

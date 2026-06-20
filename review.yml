@@ -1,0 +1,110 @@
+aid: vectorize-io
+name: Vectorize
+review:
+  question: Does Vectorize expose a documented public WebSocket or streaming API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Per API Evangelist scope, HTTP Server-Sent Events (SSE) is in-scope for
+    AsyncAPI modeling and WebSocket is in-scope. The Vectorize API
+    (https://api.vectorize.io/v1) is a synchronous REST API. Its long-running
+    operations - Iris extraction and deep research - are asynchronous but use a
+    request/poll pattern (start returns an id; a GET result endpoint returns
+    ready=true with data when finished), not a streaming transport. No SSE or
+    WebSocket surface is documented, so no AsyncAPI document was authored.
+findings:
+  summary: |
+    Vectorize does not publish a documented public WebSocket or SSE streaming
+    API. The Vectorize API is an organization-scoped REST API under
+    https://api.vectorize.io/v1 authenticated with a Bearer access token
+    (bearerAuth, JWT). All documented operations are HTTPS REST: pipeline CRUD
+    and lifecycle (create / start / stop / delete), per-pipeline retrieval,
+    connector CRUD (sources / destinations / AI platforms), file upload via
+    pre-signed URL, Iris extraction, deep research, plus events, metrics, and
+    workspaces. Extraction and deep research are long-running and use a
+    start-then-poll pattern rather than a streaming transport. Note: Vectorize
+    separately offers an OpenAI-compatible chat completions endpoint (Beta) that
+    supports SSE-style streaming through OpenAI client semantics, but that is the
+    OpenAI-compatible surface, not the core Vectorize REST API modeled here.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.vectorize.io/v1
+      documented: true
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: The core Vectorize API does not expose documented Server-Sent Events; long-running jobs use start-then-poll. An OpenAI-compatible chat endpoint (separate, Beta) can stream via OpenAI client semantics.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented for the Vectorize API as of the review date.
+  authentication:
+    scheme: bearer
+    bearerFormat: JWT
+    note: Bearer access token, organization-scoped paths under /org/{organizationId}.
+  endpointsConfirmedRest:
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/pipelines
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/pipelines
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}
+    - DELETE https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/start
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/stop
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/retrieval
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/deep-research
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/deep-research/{researchId}
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/events
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/pipelines/{pipelineId}/metrics
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/connectors/sources
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/connectors/sources
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}
+    - PATCH  https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}
+    - DELETE https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}/users
+    - PATCH  https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}/users
+    - DELETE https://api.vectorize.io/v1/org/{organizationId}/connectors/sources/{sourceConnectorId}/users
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations/{destinationConnectorId}
+    - PATCH  https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations/{destinationConnectorId}
+    - DELETE https://api.vectorize.io/v1/org/{organizationId}/connectors/destinations/{destinationConnectorId}
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}
+    - PATCH  https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}
+    - DELETE https://api.vectorize.io/v1/org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/files
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/uploads/{connectorId}/files
+    - PUT    https://api.vectorize.io/v1/org/{organizationId}/uploads/{connectorId}/files
+    - DELETE https://api.vectorize.io/v1/org/{organizationId}/uploads/{connectorId}/files/{fileName}
+    - POST   https://api.vectorize.io/v1/org/{organizationId}/extraction
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/extraction/{extractionId}
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/workspaces
+    - GET    https://api.vectorize.io/v1/org/{organizationId}/workspaces/{workspaceId}
+sources:
+  - url: https://docs.vectorize.io/reference/api/api-getting-started/
+    type: APIReference
+    note: Vectorize API (Beta); Bearer access token; organization-scoped REST paths.
+  - url: https://github.com/vectorize-io/vectorize-clients
+    type: OpenAPI
+    note: Official client repo; vectorize_api.json is the OpenAPI 3.0 source (servers https://api.vectorize.io/v1, bearerAuth).
+  - url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+    type: Documentation
+    note: Per-pipeline retrieval endpoint; vectorizes the question and runs k-ANN search with optional rerank.
+  - url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+    type: Documentation
+    note: Vectorize Iris document extraction; start job then poll for result.
+  - url: https://docs.vectorize.io/build-deploy/data-pipelines/openai-compatible-endpoint/
+    type: Documentation
+    note: Separate OpenAI-compatible chat completions endpoint (Beta) supports streaming via OpenAI client semantics; not part of the core REST API modeled here.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No documented WebSocket or SSE surface exists on the core Vectorize REST
+    API. Long-running extraction and deep research use a start-then-poll
+    request/response pattern over REST, which is not a streaming transport, so
+    no AsyncAPI document was authored. The OpenAPI document at
+    openapi/vectorize-io-openapi.yml models the documented REST surface.
