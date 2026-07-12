@@ -144,6 +144,10 @@ apis:
   description: Start a private deep-research run grounded in a pipeline's vector index
     (optionally augmented with web search) and poll for the generated research report.
 common:
+- type: DomainSecurity
+  url: security/vectorize-io-domain-security.yml
+- type: Authentication
+  url: authentication/vectorize-io-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/vectorize-io
 - type: LinkedIn
@@ -158,6 +162,8 @@ common:
   url: rate-limits/vectorize-io-rate-limits.yml
 - type: FinOps
   url: finops/vectorize-io-finops.yml
+- type: Blog
+  url: https://blog.vectorize.io/feed/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
