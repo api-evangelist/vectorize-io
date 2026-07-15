@@ -144,6 +144,8 @@ apis:
   description: Start a private deep-research run grounded in a pipeline's vector index
     (optionally augmented with web search) and poll for the generated research report.
 common:
+- type: AgenticAccess
+  url: agentic-access/vectorize-io-agentic-access.yml
 - type: DomainSecurity
   url: security/vectorize-io-domain-security.yml
 - type: Authentication
