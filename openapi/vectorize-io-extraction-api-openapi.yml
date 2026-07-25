@@ -1,0 +1,174 @@
+openapi: 3.0.1
+info:
+  title: Vectorize AI Platform Connectors Extraction API
+  description: 'The Vectorize API lets developers programmatically build and operate RAG (retrieval-augmented generation) pipelines: create / start / stop / delete pipelines, run retrieval against a pipeline''s vector index, manage source, destination, and AI-platform connectors, upload files, extract documents with Iris, and run deep research. All paths are organization-scoped under /org/{organizationId}. Authentication uses a Bearer access token.'
+  termsOfService: https://vectorize.io/terms
+  contact:
+    name: Vectorize Support
+    url: https://vectorize.io
+  version: 0.1.2
+servers:
+- url: https://api.vectorize.io/v1
+  description: Vectorize API
+security:
+- bearerAuth: []
+tags:
+- name: Extraction
+  description: Vectorize Iris document extraction.
+paths:
+  /org/{organizationId}/extraction:
+    post:
+      operationId: startExtraction
+      tags:
+      - Extraction
+      summary: Start content extraction from a file
+      description: Starts a Vectorize Iris extraction job against a previously uploaded file, converting it into Markdown chunks with optional metadata extraction.
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartExtractionRequest'
+      responses:
+        '200':
+          description: Extraction started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartExtractionResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/extraction/{extractionId}:
+    get:
+      operationId: getExtractionResult
+      tags:
+      - Extraction
+      summary: Get extraction result
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - name: extractionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Extraction result. Poll until ready is true.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResultResponse'
+        '404':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+        failedUpdates:
+          type: array
+          items:
+            type: string
+        successfulUpdates:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+    ExtractionResultResponse:
+      type: object
+      properties:
+        ready:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/ExtractionResult'
+      required:
+      - ready
+    StartExtractionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        extractionId:
+          type: string
+      required:
+      - message
+      - extractionId
+    StartExtractionRequest:
+      type: object
+      properties:
+        fileId:
+          type: string
+        type:
+          type: string
+          enum:
+          - iris
+          default: iris
+        chunkingStrategy:
+          type: string
+          enum:
+          - markdown
+          default: markdown
+        chunkSize:
+          type: number
+          default: 256
+        metadata:
+          type: object
+          description: Metadata extraction strategy.
+          additionalProperties: true
+      required:
+      - fileId
+    ExtractionResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        chunks:
+          type: array
+          items:
+            type: string
+        text:
+          type: string
+        metadata:
+          type: string
+        metadataSchema:
+          type: string
+        chunksMetadata:
+          type: array
+          items:
+            type: string
+        chunksSchema:
+          type: array
+          items:
+            type: string
+        error:
+          type: string
+      required:
+      - success
+  parameters:
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Vectorize API access token passed as a Bearer token.

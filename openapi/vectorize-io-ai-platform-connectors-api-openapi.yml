@@ -1,0 +1,171 @@
+openapi: 3.0.1
+info:
+  title: Vectorize AI Platform Connectors API
+  description: 'The Vectorize API lets developers programmatically build and operate RAG (retrieval-augmented generation) pipelines: create / start / stop / delete pipelines, run retrieval against a pipeline''s vector index, manage source, destination, and AI-platform connectors, upload files, extract documents with Iris, and run deep research. All paths are organization-scoped under /org/{organizationId}. Authentication uses a Bearer access token.'
+  termsOfService: https://vectorize.io/terms
+  contact:
+    name: Vectorize Support
+    url: https://vectorize.io
+  version: 0.1.2
+servers:
+- url: https://api.vectorize.io/v1
+  description: Vectorize API
+security:
+- bearerAuth: []
+tags:
+- name: AI Platform Connectors
+  description: Manage AI platform (embedding / model) connectors.
+paths:
+  /org/{organizationId}/connectors/aiplatforms:
+    post:
+      operationId: createAIPlatformConnector
+      tags:
+      - AI Platform Connectors
+      summary: Create an AI platform connector
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: AI platform connector created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+    get:
+      operationId: getAIPlatformConnectors
+      tags:
+      - AI Platform Connectors
+      summary: List AI platform connectors
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: AI platform connectors.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}:
+    get:
+      operationId: getAIPlatformConnector
+      tags:
+      - AI Platform Connectors
+      summary: Retrieve an AI platform connector
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/AIPlatformConnectorId'
+      responses:
+        '200':
+          description: AI platform connector.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+        '404':
+          $ref: '#/components/responses/Error'
+    patch:
+      operationId: updateAIPlatformConnector
+      tags:
+      - AI Platform Connectors
+      summary: Update an AI platform connector
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/AIPlatformConnectorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: AI platform connector updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+    delete:
+      operationId: deleteAIPlatformConnector
+      tags:
+      - AI Platform Connectors
+      summary: Delete an AI platform connector
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/AIPlatformConnectorId'
+      responses:
+        '200':
+          description: AI platform connector deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+        failedUpdates:
+          type: array
+          items:
+            type: string
+        successfulUpdates:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+    ConnectorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        connectorId:
+          type: string
+      additionalProperties: true
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+  parameters:
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
+    AIPlatformConnectorId:
+      name: aiPlatformConnectorId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Vectorize API access token passed as a Bearer token.

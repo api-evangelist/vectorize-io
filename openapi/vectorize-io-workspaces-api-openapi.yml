@@ -1,0 +1,97 @@
+openapi: 3.0.1
+info:
+  title: Vectorize AI Platform Connectors Workspaces API
+  description: 'The Vectorize API lets developers programmatically build and operate RAG (retrieval-augmented generation) pipelines: create / start / stop / delete pipelines, run retrieval against a pipeline''s vector index, manage source, destination, and AI-platform connectors, upload files, extract documents with Iris, and run deep research. All paths are organization-scoped under /org/{organizationId}. Authentication uses a Bearer access token.'
+  termsOfService: https://vectorize.io/terms
+  contact:
+    name: Vectorize Support
+    url: https://vectorize.io
+  version: 0.1.2
+servers:
+- url: https://api.vectorize.io/v1
+  description: Vectorize API
+security:
+- bearerAuth: []
+tags:
+- name: Workspaces
+  description: List and retrieve workspaces.
+paths:
+  /org/{organizationId}/workspaces:
+    get:
+      operationId: getWorkspaces
+      tags:
+      - Workspaces
+      summary: List workspaces
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: Workspaces.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /org/{organizationId}/workspaces/{workspaceId}:
+    get:
+      operationId: getWorkspaceById
+      tags:
+      - Workspaces
+      summary: Retrieve a workspace
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - name: workspaceId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Workspace.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/Error'
+components:
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+        failedUpdates:
+          type: array
+          items:
+            type: string
+        successfulUpdates:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Vectorize API access token passed as a Bearer token.

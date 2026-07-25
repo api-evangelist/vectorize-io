@@ -1,0 +1,102 @@
+openapi: 3.0.1
+info:
+  title: Vectorize AI Platform Connectors Files API
+  description: 'The Vectorize API lets developers programmatically build and operate RAG (retrieval-augmented generation) pipelines: create / start / stop / delete pipelines, run retrieval against a pipeline''s vector index, manage source, destination, and AI-platform connectors, upload files, extract documents with Iris, and run deep research. All paths are organization-scoped under /org/{organizationId}. Authentication uses a Bearer access token.'
+  termsOfService: https://vectorize.io/terms
+  contact:
+    name: Vectorize Support
+    url: https://vectorize.io
+  version: 0.1.2
+servers:
+- url: https://api.vectorize.io/v1
+  description: Vectorize API
+security:
+- bearerAuth: []
+tags:
+- name: Files
+  description: Upload generic files to the platform.
+paths:
+  /org/{organizationId}/files:
+    post:
+      operationId: startFileUpload
+      tags:
+      - Files
+      summary: Upload a generic file to the platform
+      description: Requests a pre-signed upload URL for a file. The client then PUTs the file bytes to the returned uploadUrl. The returned fileId can be used with the Extraction API.
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartFileUploadRequest'
+      responses:
+        '200':
+          description: Upload URL issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartFileUploadResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    StartFileUploadResponse:
+      type: object
+      properties:
+        fileId:
+          type: string
+        uploadUrl:
+          type: string
+      required:
+      - fileId
+      - uploadUrl
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+        failedUpdates:
+          type: array
+          items:
+            type: string
+        successfulUpdates:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+    StartFileUploadRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        contentType:
+          type: string
+      required:
+      - name
+      - contentType
+  parameters:
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Vectorize API access token passed as a Bearer token.

@@ -1,0 +1,520 @@
+openapi: 3.0.1
+info:
+  title: Vectorize AI Platform Connectors Pipelines API
+  description: 'The Vectorize API lets developers programmatically build and operate RAG (retrieval-augmented generation) pipelines: create / start / stop / delete pipelines, run retrieval against a pipeline''s vector index, manage source, destination, and AI-platform connectors, upload files, extract documents with Iris, and run deep research. All paths are organization-scoped under /org/{organizationId}. Authentication uses a Bearer access token.'
+  termsOfService: https://vectorize.io/terms
+  contact:
+    name: Vectorize Support
+    url: https://vectorize.io
+  version: 0.1.2
+servers:
+- url: https://api.vectorize.io/v1
+  description: Vectorize API
+security:
+- bearerAuth: []
+tags:
+- name: Pipelines
+  description: Create and operate RAG pipelines, retrieval, and deep research.
+paths:
+  /org/{organizationId}/pipelines:
+    post:
+      operationId: createPipeline
+      tags:
+      - Pipelines
+      summary: Create a new pipeline
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineConfigurationSchema'
+      responses:
+        '200':
+          description: Pipeline created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePipelineResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+        '401':
+          $ref: '#/components/responses/Error'
+        '500':
+          $ref: '#/components/responses/Error'
+    get:
+      operationId: getPipelines
+      tags:
+      - Pipelines
+      summary: List pipelines for an organization
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: A list of pipelines.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPipelinesResponse'
+        '401':
+          $ref: '#/components/responses/Error'
+        '500':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}:
+    get:
+      operationId: getPipeline
+      tags:
+      - Pipelines
+      summary: Retrieve a pipeline
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: The pipeline.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineListSummary'
+        '404':
+          $ref: '#/components/responses/Error'
+    delete:
+      operationId: deletePipeline
+      tags:
+      - Pipelines
+      summary: Delete a pipeline
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '404':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}/start:
+    post:
+      operationId: startPipeline
+      tags:
+      - Pipelines
+      summary: Start a pipeline
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '404':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}/stop:
+    post:
+      operationId: stopPipeline
+      tags:
+      - Pipelines
+      summary: Stop a pipeline
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline stopped.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '404':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}/retrieval:
+    post:
+      operationId: retrieveDocuments
+      tags:
+      - Pipelines
+      summary: Retrieve documents from a pipeline
+      description: Vectorizes the input question, runs a k-ANN search against the pipeline's vector index, optionally reranks, and returns the most relevant document chunks ordered by relevancy / similarity score.
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetrieveDocumentsRequest'
+      responses:
+        '200':
+          description: Retrieved documents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDocumentsResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+        '500':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}/deep-research:
+    post:
+      operationId: startDeepResearch
+      tags:
+      - Pipelines
+      summary: Start a deep research
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartDeepResearchRequest'
+      responses:
+        '200':
+          description: Deep research started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartDeepResearchResponse'
+        '400':
+          $ref: '#/components/responses/Error'
+        '404':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}/deep-research/{researchId}:
+    get:
+      operationId: getDeepResearchResult
+      tags:
+      - Pipelines
+      summary: Get a deep research result
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      - name: researchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The deep research result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeepResearchResultResponse'
+        '404':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}/events:
+    get:
+      operationId: getPipelineEvents
+      tags:
+      - Pipelines
+      summary: Get pipeline events
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline events.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/Error'
+  /org/{organizationId}/pipelines/{pipelineId}/metrics:
+    get:
+      operationId: getPipelineMetrics
+      tags:
+      - Pipelines
+      summary: Get pipeline metrics
+      parameters:
+      - $ref: '#/components/parameters/OrganizationId'
+      - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline metrics.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/Error'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+        failedUpdates:
+          type: array
+          items:
+            type: string
+        successfulUpdates:
+          type: array
+          items:
+            type: string
+      required:
+      - error
+    CreatePipelineResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+          required:
+          - id
+      required:
+      - message
+      - data
+    GetPipelinesResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineListSummary'
+      required:
+      - message
+      - data
+    Document:
+      type: object
+      properties:
+        relevancy:
+          type: number
+        id:
+          type: string
+        text:
+          type: string
+        chunk_id:
+          type: string
+        total_chunks:
+          type: string
+        origin:
+          type: string
+        origin_id:
+          type: string
+        similarity:
+          type: number
+        source:
+          type: string
+        unique_source:
+          type: string
+        source_display_name:
+          type: string
+        pipeline_id:
+          type: string
+        org_id:
+          type: string
+      required:
+      - relevancy
+      - id
+      - text
+      - chunk_id
+      - total_chunks
+      - origin
+      - origin_id
+      - similarity
+      - source
+      - unique_source
+      - source_display_name
+      additionalProperties: true
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+    StartDeepResearchResponse:
+      type: object
+      properties:
+        researchId:
+          type: string
+      required:
+      - researchId
+    PipelineListSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        documentCount:
+          type: number
+        sourceConnectorAuthIds:
+          type: array
+          items:
+            type: string
+        destinationConnectorAuthIds:
+          type: array
+          items:
+            type: string
+        aiPlatformAuthIds:
+          type: array
+          items:
+            type: string
+        sourceConnectorTypes:
+          type: array
+          items:
+            type: string
+        destinationConnectorTypes:
+          type: array
+          items:
+            type: string
+        aiPlatformTypes:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          nullable: true
+      additionalProperties: true
+    StartDeepResearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        webSearch:
+          type: boolean
+          default: false
+        schema:
+          type: string
+        n8n:
+          type: object
+          description: Optional n8n workflow configuration.
+          additionalProperties: true
+      required:
+      - query
+    RetrieveDocumentsResponse:
+      type: object
+      properties:
+        question:
+          type: string
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        average_relevancy:
+          type: number
+        ndcg:
+          type: number
+      required:
+      - question
+      - documents
+      - average_relevancy
+      - ndcg
+    DeepResearchResultResponse:
+      type: object
+      properties:
+        ready:
+          type: boolean
+        data:
+          type: object
+          description: The generated deep research report when ready.
+          additionalProperties: true
+      required:
+      - ready
+    PipelineConfigurationSchema:
+      type: object
+      properties:
+        sourceConnectors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: A pipeline source connector reference and its configuration.
+            additionalProperties: true
+        destinationConnector:
+          type: object
+          description: The destination (vector database) connector for the pipeline.
+          additionalProperties: true
+        aiPlatformConnector:
+          type: object
+          description: The AI platform (embedding / model) connector for the pipeline.
+          additionalProperties: true
+        pipelineName:
+          type: string
+          minLength: 1
+        schedule:
+          type: object
+          description: Refresh schedule for the pipeline.
+          additionalProperties: true
+      required:
+      - sourceConnectors
+      - destinationConnector
+      - aiPlatformConnector
+      - pipelineName
+      - schedule
+    RetrieveDocumentsRequest:
+      type: object
+      properties:
+        question:
+          type: string
+        numResults:
+          type: number
+          minimum: 1
+        rerank:
+          type: boolean
+          default: true
+        metadata-filters:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              nullable: true
+        context:
+          type: object
+          description: Optional context object used for query rewriting.
+          additionalProperties: true
+        advanced-query:
+          type: object
+          description: Optional advanced-query configuration.
+          additionalProperties: true
+      required:
+      - question
+      - numResults
+  parameters:
+    PipelineId:
+      name: pipelineId
+      in: path
+      required: true
+      schema:
+        type: string
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Vectorize API access token passed as a Bearer token.
