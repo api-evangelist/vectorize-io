@@ -7,7 +7,20 @@ description: Vectorize is a RAG (retrieval-augmented generation) pipeline platfo
   against a managed vector database. The Vectorize API lets developers create, start,
   and stop RAG pipelines, run retrieval, manage source / destination / AI-platform
   connectors, upload files, extract documents with Iris, and run deep research.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vectorize-io.png
 tags:
 - AI
 - RAG
@@ -19,130 +32,198 @@ created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-- aid: vectorize-io:vectorize-pipelines-api
-  name: Vectorize Pipelines API
-  tags:
-  - RAG
-  - Pipelines
-  - Ingest
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+- aid: vectorize-io:vectorize-io-ai-platform-connectors-api
+  name: Vectorize AI Platform Connectors API
+  description: Manage AI platform (embedding / model) connectors.
   humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
   baseURL: https://api.vectorize.io/v1
-  properties:
-  - url: https://docs.vectorize.io/build-deploy/data-pipelines/
-    type: Documentation
-  - url: https://docs.vectorize.io/reference/api/api-getting-started/
-    type: APIReference
-  - url: openapi/vectorize-io-openapi.yml
-    type: OpenAPI
-  - url: collections/vectorize-io.postman_collection.json
-    type: PostmanCollection
-  description: Create, list, retrieve, start, stop, and delete organization-scoped RAG
-    pipelines that wire source connectors, an AI-platform embedding connector, and a
-    destination vector database together, plus pipeline events and metrics.
-- aid: vectorize-io:vectorize-retrieval-api
-  name: Vectorize Retrieval API
   tags:
-  - Retrieval
-  - Search
-  - Reranking
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
-  baseURL: https://api.vectorize.io/v1
+  - AI Platform Connectors
   properties:
-  - url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
-    type: Documentation
-  - url: https://docs.vectorize.io/reference/api/api-getting-started/
-    type: APIReference
-  - url: openapi/vectorize-io-openapi.yml
-    type: OpenAPI
-  - url: collections/vectorize-io.postman_collection.json
-    type: PostmanCollection
-  description: Per-pipeline retrieval endpoint that vectorizes the input question, runs
-    a k-ANN search against the pipeline's vector index, applies optional reranking and
-    metadata filters, and returns ranked document chunks with relevancy scores.
-- aid: vectorize-io:vectorize-connectors-api
-  name: Vectorize Connectors API
-  tags:
-  - Connectors
-  - Sources
-  - Destinations
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  - type: OpenAPI
+    url: openapi/vectorize-io-ai-platform-connectors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+- aid: vectorize-io:vectorize-io-destination-connectors-api
+  name: Vectorize Destination Connectors API
+  description: Manage destination (vector database) connectors.
   humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
   baseURL: https://api.vectorize.io/v1
-  properties:
-  - url: https://docs.vectorize.io/integrations/
-    type: Documentation
-  - url: https://docs.vectorize.io/reference/api/api-getting-started/
-    type: APIReference
-  - url: openapi/vectorize-io-openapi.yml
-    type: OpenAPI
-  - url: collections/vectorize-io.postman_collection.json
-    type: PostmanCollection
-  description: CRUD management of source connectors (data sources), destination connectors
-    (vector databases), and AI-platform connectors (embedding / model providers), plus
-    per-source user authorization for OAuth-style connectors.
-- aid: vectorize-io:vectorize-file-upload-api
-  name: Vectorize File Upload API
   tags:
-  - Files
-  - Upload
-  - Storage
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  - Destination Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/vectorize-io-destination-connectors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+- aid: vectorize-io:vectorize-io-extraction-api
+  name: Vectorize Extraction API
+  description: Vectorize Iris document extraction.
   humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
   baseURL: https://api.vectorize.io/v1
-  properties:
-  - url: https://docs.vectorize.io/build-deploy/data-sources/
-    type: Documentation
-  - url: https://docs.vectorize.io/reference/api/api-getting-started/
-    type: APIReference
-  - url: openapi/vectorize-io-openapi.yml
-    type: OpenAPI
-  - url: collections/vectorize-io.postman_collection.json
-    type: PostmanCollection
-  description: Upload generic files to the platform via a pre-signed URL flow, and push
-    or delete files against a File Upload source connector for ingestion into a pipeline.
-- aid: vectorize-io:vectorize-extraction-iris-api
-  name: Vectorize Extraction (Iris) API
   tags:
   - Extraction
-  - Iris
-  - Chunking
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
-  baseURL: https://api.vectorize.io/v1
   properties:
-  - url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
-    type: Documentation
-  - url: https://docs.vectorize.io/reference/api/api-getting-started/
-    type: APIReference
-  - url: openapi/vectorize-io-openapi.yml
-    type: OpenAPI
-  - url: collections/vectorize-io.postman_collection.json
-    type: PostmanCollection
-  description: Vectorize Iris document extraction - start an extraction job against an
-    uploaded file to convert it into Markdown chunks with optional metadata, and poll
-    for the asynchronous extraction result.
-- aid: vectorize-io:vectorize-deep-research-api
-  name: Vectorize Deep Research API
-  tags:
-  - Deep Research
-  - Agents
-  - RAG
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  - type: OpenAPI
+    url: openapi/vectorize-io-extraction-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+- aid: vectorize-io:vectorize-io-files-api
+  name: Vectorize Files API
+  description: Upload generic files to the platform.
   humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
   baseURL: https://api.vectorize.io/v1
+  tags:
+  - Files
   properties:
-  - url: https://docs.vectorize.io/build-deploy/data-pipelines/
-    type: Documentation
-  - url: https://docs.vectorize.io/reference/api/api-getting-started/
-    type: APIReference
-  - url: openapi/vectorize-io-openapi.yml
-    type: OpenAPI
-  - url: collections/vectorize-io.postman_collection.json
-    type: PostmanCollection
-  description: Start a private deep-research run grounded in a pipeline's vector index
-    (optionally augmented with web search) and poll for the generated research report.
+  - type: OpenAPI
+    url: openapi/vectorize-io-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+- aid: vectorize-io:vectorize-io-pipelines-api
+  name: Vectorize Pipelines API
+  description: Create and operate RAG pipelines, retrieval, and deep research.
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  tags:
+  - Pipelines
+  properties:
+  - type: OpenAPI
+    url: openapi/vectorize-io-pipelines-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+- aid: vectorize-io:vectorize-io-source-connectors-api
+  name: Vectorize Source Connectors API
+  description: Manage data source connectors.
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  tags:
+  - Source Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/vectorize-io-source-connectors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+- aid: vectorize-io:vectorize-io-uploads-api
+  name: Vectorize Uploads API
+  description: Push and manage files against File Upload connectors.
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  tags:
+  - Uploads
+  properties:
+  - type: OpenAPI
+    url: openapi/vectorize-io-uploads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
+- aid: vectorize-io:vectorize-io-workspaces-api
+  name: Vectorize Workspaces API
+  description: List and retrieve workspaces.
+  humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
+  baseURL: https://api.vectorize.io/v1
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/vectorize-io-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/
+  - type: APIReference
+    url: https://docs.vectorize.io/reference/api/api-getting-started/
+  - type: PostmanCollection
+    url: collections/vectorize-io.postman_collection.json
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-pipelines/retrieval-endpoint/
+  - type: Documentation
+    url: https://docs.vectorize.io/integrations/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/data-sources/
+  - type: Documentation
+    url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
 common:
 - type: AgenticAccess
   url: agentic-access/vectorize-io-agentic-access.yml
