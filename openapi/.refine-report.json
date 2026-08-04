@@ -1,0 +1,28 @@
+{
+  "provider": "vectorize-io",
+  "sources": [
+    "vectorize-io-ai-platform-connectors-api-openapi.yml",
+    "vectorize-io-destination-connectors-api-openapi.yml",
+    "vectorize-io-extraction-api-openapi.yml",
+    "vectorize-io-files-api-openapi.yml",
+    "vectorize-io-pipelines-api-openapi.yml",
+    "vectorize-io-source-connectors-api-openapi.yml",
+    "vectorize-io-uploads-api-openapi.yml",
+    "vectorize-io-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "vectorize-io-ai-platform-connectors-api-openapi.yml",
+    "vectorize-io-destination-connectors-api-openapi.yml",
+    "vectorize-io-extraction-api-openapi.yml",
+    "vectorize-io-files-api-openapi.yml",
+    "vectorize-io-pipelines-api-openapi.yml",
+    "vectorize-io-source-connectors-api-openapi.yml",
+    "vectorize-io-uploads-api-openapi.yml",
+    "vectorize-io-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

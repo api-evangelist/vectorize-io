@@ -1,0 +1,1002 @@
+openapi: 3.0.1
+info:
+  title: Vectorize API
+  description: >-
+    The Vectorize API lets developers programmatically build and operate RAG
+    (retrieval-augmented generation) pipelines: create / start / stop / delete
+    pipelines, run retrieval against a pipeline's vector index, manage source,
+    destination, and AI-platform connectors, upload files, extract documents with
+    Iris, and run deep research. All paths are organization-scoped under
+    /org/{organizationId}. Authentication uses a Bearer access token.
+  termsOfService: https://vectorize.io/terms
+  contact:
+    name: Vectorize Support
+    url: https://vectorize.io
+  version: 0.1.2
+servers:
+  - url: https://api.vectorize.io/v1
+    description: Vectorize API
+security:
+  - bearerAuth: []
+tags:
+  - name: Pipelines
+    description: Create and operate RAG pipelines, retrieval, and deep research.
+  - name: Source Connectors
+    description: Manage data source connectors.
+  - name: Destination Connectors
+    description: Manage destination (vector database) connectors.
+  - name: AI Platform Connectors
+    description: Manage AI platform (embedding / model) connectors.
+  - name: Files
+    description: Upload generic files to the platform.
+  - name: Uploads
+    description: Push and manage files against File Upload connectors.
+  - name: Extraction
+    description: Vectorize Iris document extraction.
+  - name: Workspaces
+    description: List and retrieve workspaces.
+paths:
+  /org/{organizationId}/pipelines:
+    post:
+      operationId: createPipeline
+      tags: [Pipelines]
+      summary: Create a new pipeline
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PipelineConfigurationSchema'
+      responses:
+        '200':
+          description: Pipeline created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePipelineResponse'
+        '400': { $ref: '#/components/responses/Error' }
+        '401': { $ref: '#/components/responses/Error' }
+        '500': { $ref: '#/components/responses/Error' }
+    get:
+      operationId: getPipelines
+      tags: [Pipelines]
+      summary: List pipelines for an organization
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: A list of pipelines.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPipelinesResponse'
+        '401': { $ref: '#/components/responses/Error' }
+        '500': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}:
+    get:
+      operationId: getPipeline
+      tags: [Pipelines]
+      summary: Retrieve a pipeline
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: The pipeline.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PipelineListSummary'
+        '404': { $ref: '#/components/responses/Error' }
+    delete:
+      operationId: deletePipeline
+      tags: [Pipelines]
+      summary: Delete a pipeline
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}/start:
+    post:
+      operationId: startPipeline
+      tags: [Pipelines]
+      summary: Start a pipeline
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}/stop:
+    post:
+      operationId: stopPipeline
+      tags: [Pipelines]
+      summary: Stop a pipeline
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline stopped.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}/retrieval:
+    post:
+      operationId: retrieveDocuments
+      tags: [Pipelines]
+      summary: Retrieve documents from a pipeline
+      description: >-
+        Vectorizes the input question, runs a k-ANN search against the pipeline's
+        vector index, optionally reranks, and returns the most relevant document
+        chunks ordered by relevancy / similarity score.
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetrieveDocumentsRequest'
+      responses:
+        '200':
+          description: Retrieved documents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveDocumentsResponse'
+        '400': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+        '500': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}/deep-research:
+    post:
+      operationId: startDeepResearch
+      tags: [Pipelines]
+      summary: Start a deep research
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartDeepResearchRequest'
+      responses:
+        '200':
+          description: Deep research started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartDeepResearchResponse'
+        '400': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}/deep-research/{researchId}:
+    get:
+      operationId: getDeepResearchResult
+      tags: [Pipelines]
+      summary: Get a deep research result
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+        - name: researchId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: The deep research result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeepResearchResultResponse'
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}/events:
+    get:
+      operationId: getPipelineEvents
+      tags: [Pipelines]
+      summary: Get pipeline events
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline events.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/pipelines/{pipelineId}/metrics:
+    get:
+      operationId: getPipelineMetrics
+      tags: [Pipelines]
+      summary: Get pipeline metrics
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/PipelineId'
+      responses:
+        '200':
+          description: Pipeline metrics.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/connectors/sources:
+    post:
+      operationId: createSourceConnector
+      tags: [Source Connectors]
+      summary: Create a source connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: Source connector created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+        '400': { $ref: '#/components/responses/Error' }
+    get:
+      operationId: getSourceConnectors
+      tags: [Source Connectors]
+      summary: List source connectors
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: Source connectors.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+  /org/{organizationId}/connectors/sources/{sourceConnectorId}:
+    get:
+      operationId: getSourceConnector
+      tags: [Source Connectors]
+      summary: Retrieve a source connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/SourceConnectorId'
+      responses:
+        '200':
+          description: Source connector.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+        '404': { $ref: '#/components/responses/Error' }
+    patch:
+      operationId: updateSourceConnector
+      tags: [Source Connectors]
+      summary: Update a source connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/SourceConnectorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: Source connector updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+    delete:
+      operationId: deleteSourceConnector
+      tags: [Source Connectors]
+      summary: Delete a source connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/SourceConnectorId'
+      responses:
+        '200':
+          description: Source connector deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+  /org/{organizationId}/connectors/sources/{sourceConnectorId}/users:
+    post:
+      operationId: addUserToSourceConnector
+      tags: [Source Connectors]
+      summary: Add a user to a source connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/SourceConnectorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: User added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+    patch:
+      operationId: updateUserInSourceConnector
+      tags: [Source Connectors]
+      summary: Update a user in a source connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/SourceConnectorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: User updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+    delete:
+      operationId: deleteUserFromSourceConnector
+      tags: [Source Connectors]
+      summary: Remove a user from a source connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/SourceConnectorId'
+      responses:
+        '200':
+          description: User removed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+  /org/{organizationId}/connectors/destinations:
+    post:
+      operationId: createDestinationConnector
+      tags: [Destination Connectors]
+      summary: Create a destination connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: Destination connector created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+    get:
+      operationId: getDestinationConnectors
+      tags: [Destination Connectors]
+      summary: List destination connectors
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: Destination connectors.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+  /org/{organizationId}/connectors/destinations/{destinationConnectorId}:
+    get:
+      operationId: getDestinationConnector
+      tags: [Destination Connectors]
+      summary: Retrieve a destination connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/DestinationConnectorId'
+      responses:
+        '200':
+          description: Destination connector.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+        '404': { $ref: '#/components/responses/Error' }
+    patch:
+      operationId: updateDestinationConnector
+      tags: [Destination Connectors]
+      summary: Update a destination connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/DestinationConnectorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: Destination connector updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+    delete:
+      operationId: deleteDestinationConnector
+      tags: [Destination Connectors]
+      summary: Delete a destination connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/DestinationConnectorId'
+      responses:
+        '200':
+          description: Destination connector deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+  /org/{organizationId}/connectors/aiplatforms:
+    post:
+      operationId: createAIPlatformConnector
+      tags: [AI Platform Connectors]
+      summary: Create an AI platform connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: AI platform connector created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+    get:
+      operationId: getAIPlatformConnectors
+      tags: [AI Platform Connectors]
+      summary: List AI platform connectors
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: AI platform connectors.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+  /org/{organizationId}/connectors/aiplatforms/{aiPlatformConnectorId}:
+    get:
+      operationId: getAIPlatformConnector
+      tags: [AI Platform Connectors]
+      summary: Retrieve an AI platform connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/AIPlatformConnectorId'
+      responses:
+        '200':
+          description: AI platform connector.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+        '404': { $ref: '#/components/responses/Error' }
+    patch:
+      operationId: updateAIPlatformConnector
+      tags: [AI Platform Connectors]
+      summary: Update an AI platform connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/AIPlatformConnectorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200':
+          description: AI platform connector updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+    delete:
+      operationId: deleteAIPlatformConnector
+      tags: [AI Platform Connectors]
+      summary: Delete an AI platform connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/AIPlatformConnectorId'
+      responses:
+        '200':
+          description: AI platform connector deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+  /org/{organizationId}/files:
+    post:
+      operationId: startFileUpload
+      tags: [Files]
+      summary: Upload a generic file to the platform
+      description: >-
+        Requests a pre-signed upload URL for a file. The client then PUTs the file
+        bytes to the returned uploadUrl. The returned fileId can be used with the
+        Extraction API.
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartFileUploadRequest'
+      responses:
+        '200':
+          description: Upload URL issued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartFileUploadResponse'
+        '400': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/uploads/{connectorId}/files:
+    get:
+      operationId: getUploadFilesFromConnector
+      tags: [Uploads]
+      summary: List files in a File Upload connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/ConnectorId'
+      responses:
+        '200':
+          description: Files in the connector.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+    put:
+      operationId: startFileUploadToConnector
+      tags: [Uploads]
+      summary: Upload files to a File Upload connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/ConnectorId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Files uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+  /org/{organizationId}/uploads/{connectorId}/files/{fileName}:
+    delete:
+      operationId: deleteFileFromConnector
+      tags: [Uploads]
+      summary: Delete a file from a File Upload connector
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - $ref: '#/components/parameters/ConnectorId'
+        - name: fileName
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: File deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+  /org/{organizationId}/extraction:
+    post:
+      operationId: startExtraction
+      tags: [Extraction]
+      summary: Start content extraction from a file
+      description: >-
+        Starts a Vectorize Iris extraction job against a previously uploaded file,
+        converting it into Markdown chunks with optional metadata extraction.
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartExtractionRequest'
+      responses:
+        '200':
+          description: Extraction started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartExtractionResponse'
+        '400': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/extraction/{extractionId}:
+    get:
+      operationId: getExtractionResult
+      tags: [Extraction]
+      summary: Get extraction result
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - name: extractionId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Extraction result. Poll until ready is true.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtractionResultResponse'
+        '404': { $ref: '#/components/responses/Error' }
+  /org/{organizationId}/workspaces:
+    get:
+      operationId: getWorkspaces
+      tags: [Workspaces]
+      summary: List workspaces
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+      responses:
+        '200':
+          description: Workspaces.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+  /org/{organizationId}/workspaces/{workspaceId}:
+    get:
+      operationId: getWorkspaceById
+      tags: [Workspaces]
+      summary: Retrieve a workspace
+      parameters:
+        - $ref: '#/components/parameters/OrganizationId'
+        - name: workspaceId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Workspace.
+          content:
+            application/json:
+              schema: { type: object, additionalProperties: true }
+        '404': { $ref: '#/components/responses/Error' }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Vectorize API access token passed as a Bearer token.
+  parameters:
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema: { type: string }
+    PipelineId:
+      name: pipelineId
+      in: path
+      required: true
+      schema: { type: string }
+    SourceConnectorId:
+      name: sourceConnectorId
+      in: path
+      required: true
+      schema: { type: string }
+    DestinationConnectorId:
+      name: destinationConnectorId
+      in: path
+      required: true
+      schema: { type: string }
+    AIPlatformConnectorId:
+      name: aiPlatformConnectorId
+      in: path
+      required: true
+      schema: { type: string }
+    ConnectorId:
+      name: connectorId
+      in: path
+      required: true
+      schema: { type: string }
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error: { type: string }
+        details: { type: string }
+        failedUpdates:
+          type: array
+          items: { type: string }
+        successfulUpdates:
+          type: array
+          items: { type: string }
+      required: [error]
+    MessageResponse:
+      type: object
+      properties:
+        message: { type: string }
+      required: [message]
+    ConnectorResponse:
+      type: object
+      properties:
+        message: { type: string }
+        connectorId: { type: string }
+      additionalProperties: true
+    PipelineConfigurationSchema:
+      type: object
+      properties:
+        sourceConnectors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: A pipeline source connector reference and its configuration.
+            additionalProperties: true
+        destinationConnector:
+          type: object
+          description: The destination (vector database) connector for the pipeline.
+          additionalProperties: true
+        aiPlatformConnector:
+          type: object
+          description: The AI platform (embedding / model) connector for the pipeline.
+          additionalProperties: true
+        pipelineName:
+          type: string
+          minLength: 1
+        schedule:
+          type: object
+          description: Refresh schedule for the pipeline.
+          additionalProperties: true
+      required:
+        - sourceConnectors
+        - destinationConnector
+        - aiPlatformConnector
+        - pipelineName
+        - schedule
+    CreatePipelineResponse:
+      type: object
+      properties:
+        message: { type: string }
+        data:
+          type: object
+          properties:
+            id: { type: string }
+          required: [id]
+      required: [message, data]
+    GetPipelinesResponse:
+      type: object
+      properties:
+        message: { type: string }
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PipelineListSummary'
+      required: [message, data]
+    PipelineListSummary:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        documentCount: { type: number }
+        sourceConnectorAuthIds:
+          type: array
+          items: { type: string }
+        destinationConnectorAuthIds:
+          type: array
+          items: { type: string }
+        aiPlatformAuthIds:
+          type: array
+          items: { type: string }
+        sourceConnectorTypes:
+          type: array
+          items: { type: string }
+        destinationConnectorTypes:
+          type: array
+          items: { type: string }
+        aiPlatformTypes:
+          type: array
+          items: { type: string }
+        createdAt:
+          type: string
+          nullable: true
+      additionalProperties: true
+    RetrieveDocumentsRequest:
+      type: object
+      properties:
+        question:
+          type: string
+        numResults:
+          type: number
+          minimum: 1
+        rerank:
+          type: boolean
+          default: true
+        metadata-filters:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              nullable: true
+        context:
+          type: object
+          description: Optional context object used for query rewriting.
+          additionalProperties: true
+        advanced-query:
+          type: object
+          description: Optional advanced-query configuration.
+          additionalProperties: true
+      required:
+        - question
+        - numResults
+    RetrieveDocumentsResponse:
+      type: object
+      properties:
+        question: { type: string }
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        average_relevancy: { type: number }
+        ndcg: { type: number }
+      required: [question, documents, average_relevancy, ndcg]
+    Document:
+      type: object
+      properties:
+        relevancy: { type: number }
+        id: { type: string }
+        text: { type: string }
+        chunk_id: { type: string }
+        total_chunks: { type: string }
+        origin: { type: string }
+        origin_id: { type: string }
+        similarity: { type: number }
+        source: { type: string }
+        unique_source: { type: string }
+        source_display_name: { type: string }
+        pipeline_id: { type: string }
+        org_id: { type: string }
+      required:
+        - relevancy
+        - id
+        - text
+        - chunk_id
+        - total_chunks
+        - origin
+        - origin_id
+        - similarity
+        - source
+        - unique_source
+        - source_display_name
+      additionalProperties: true
+    StartFileUploadRequest:
+      type: object
+      properties:
+        name: { type: string }
+        contentType: { type: string }
+      required: [name, contentType]
+    StartFileUploadResponse:
+      type: object
+      properties:
+        fileId: { type: string }
+        uploadUrl: { type: string }
+      required: [fileId, uploadUrl]
+    StartExtractionRequest:
+      type: object
+      properties:
+        fileId:
+          type: string
+        type:
+          type: string
+          enum: [iris]
+          default: iris
+        chunkingStrategy:
+          type: string
+          enum: [markdown]
+          default: markdown
+        chunkSize:
+          type: number
+          default: 256
+        metadata:
+          type: object
+          description: Metadata extraction strategy.
+          additionalProperties: true
+      required: [fileId]
+    StartExtractionResponse:
+      type: object
+      properties:
+        message: { type: string }
+        extractionId: { type: string }
+      required: [message, extractionId]
+    ExtractionResultResponse:
+      type: object
+      properties:
+        ready:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/ExtractionResult'
+      required: [ready]
+    ExtractionResult:
+      type: object
+      properties:
+        success: { type: boolean }
+        chunks:
+          type: array
+          items: { type: string }
+        text: { type: string }
+        metadata: { type: string }
+        metadataSchema: { type: string }
+        chunksMetadata:
+          type: array
+          items: { type: string }
+        chunksSchema:
+          type: array
+          items: { type: string }
+        error: { type: string }
+      required: [success]
+    StartDeepResearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        webSearch:
+          type: boolean
+          default: false
+        schema:
+          type: string
+        n8n:
+          type: object
+          description: Optional n8n workflow configuration.
+          additionalProperties: true
+      required: [query]
+    StartDeepResearchResponse:
+      type: object
+      properties:
+        researchId: { type: string }
+      required: [researchId]
+    DeepResearchResultResponse:
+      type: object
+      properties:
+        ready: { type: boolean }
+        data:
+          type: object
+          description: The generated deep research report when ready.
+          additionalProperties: true
+      required: [ready]
