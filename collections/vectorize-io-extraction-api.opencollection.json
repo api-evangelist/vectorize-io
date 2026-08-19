@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectorize AI Platform Connectors Extraction API",
+    "version": "0.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Extraction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Start content extraction from a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/extraction",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a Vectorize Iris extraction job against a previously uploaded file, converting it into Markdown chunks with optional metadata extraction."
+        },
+        {
+          "info": {
+            "name": "Get extraction result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/extraction/:extractionId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "extractionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get extraction result"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

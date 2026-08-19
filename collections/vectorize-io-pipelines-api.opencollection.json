@@ -1,0 +1,295 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectorize AI Platform Connectors Pipelines API",
+    "version": "0.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List pipelines for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              }
+            ]
+          },
+          "docs": "List pipelines for an organization"
+        },
+        {
+          "info": {
+            "name": "Create a new pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new pipeline"
+        },
+        {
+          "info": {
+            "name": "Retrieve a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a pipeline"
+        },
+        {
+          "info": {
+            "name": "Delete a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a pipeline"
+        },
+        {
+          "info": {
+            "name": "Start a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId/start",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Start a pipeline"
+        },
+        {
+          "info": {
+            "name": "Stop a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId/stop",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stop a pipeline"
+        },
+        {
+          "info": {
+            "name": "Retrieve documents from a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId/retrieval",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Vectorizes the input question, runs a k-ANN search against the pipeline's vector index, optionally reranks, and returns the most relevant document chunks ordered by relevancy / similarity score."
+        },
+        {
+          "info": {
+            "name": "Start a deep research",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId/deep-research",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a deep research"
+        },
+        {
+          "info": {
+            "name": "Get a deep research result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId/deep-research/:researchId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "researchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a deep research result"
+        },
+        {
+          "info": {
+            "name": "Get pipeline events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId/events",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get pipeline events"
+        },
+        {
+          "info": {
+            "name": "Get pipeline metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/pipelines/:pipelineId/metrics",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get pipeline metrics"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

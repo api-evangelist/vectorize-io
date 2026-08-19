@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectorize AI Platform Connectors Uploads API",
+    "version": "0.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Uploads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List files in a File Upload connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/uploads/:connectorId/files",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "connectorId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List files in a File Upload connector"
+        },
+        {
+          "info": {
+            "name": "Upload files to a File Upload connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/uploads/:connectorId/files",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "connectorId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "files",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload files to a File Upload connector"
+        },
+        {
+          "info": {
+            "name": "Delete a file from a File Upload connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/uploads/:connectorId/files/:fileName",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "connectorId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a file from a File Upload connector"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

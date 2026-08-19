@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectorize AI Platform Connectors Files API",
+    "version": "0.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a generic file to the platform",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/files",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requests a pre-signed upload URL for a file. The client then PUTs the file bytes to the returned uploadUrl. The returned fileId can be used with the Extraction API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

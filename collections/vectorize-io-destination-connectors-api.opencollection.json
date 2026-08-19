@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vectorize AI Platform Connectors Destination Connectors API",
+    "version": "0.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Destination Connectors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List destination connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/connectors/destinations",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              }
+            ]
+          },
+          "docs": "List destination connectors"
+        },
+        {
+          "info": {
+            "name": "Create a destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/connectors/destinations",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a destination connector"
+        },
+        {
+          "info": {
+            "name": "Retrieve a destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/connectors/destinations/:destinationConnectorId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "destinationConnectorId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a destination connector"
+        },
+        {
+          "info": {
+            "name": "Update a destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/connectors/destinations/:destinationConnectorId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "destinationConnectorId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a destination connector"
+        },
+        {
+          "info": {
+            "name": "Delete a destination connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.vectorize.io/v1/org/:organizationId/connectors/destinations/:destinationConnectorId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Vectorize organization identifier."
+              },
+              {
+                "name": "destinationConnectorId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a destination connector"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
