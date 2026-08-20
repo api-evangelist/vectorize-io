@@ -22,6 +22,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vectorize-io.png
 tags:
+- Artificial Intelligence
+- RAG
+- Vectorization
+- Embeddings
+- Retrieval
+- Vector Database
+tags_raw:
 - AI
 - RAG
 - Vectorization
@@ -110,6 +117,8 @@ apis:
   humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
   baseURL: https://api.vectorize.io/v1
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
