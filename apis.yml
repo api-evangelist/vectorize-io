@@ -7,6 +7,18 @@ description: Vectorize is a RAG (retrieval-augmented generation) pipeline platfo
   against a managed vector database. The Vectorize API lets developers create, start,
   and stop RAG pipelines, run retrieval, manage source / destination / AI-platform
   connectors, upload files, extract documents with Iris, and run deep research.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
