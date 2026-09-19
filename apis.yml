@@ -227,6 +227,8 @@ apis:
   humanURL: https://docs.vectorize.io/reference/api/api-getting-started/
   baseURL: https://api.vectorize.io/v1
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
