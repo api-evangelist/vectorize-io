@@ -1,0 +1,32 @@
+# Front Door AI Index — vectorize-io — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: vectorize-io
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: vectorize.io
+  final_host: vectorize.io
+  ownership: own
+  owner: vectorize-io
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 8
+  host_score: 8
+  density: 17.13
+  words: 467
+  tiers:
+    agentic: 4
+    core: 2
+    model: 2
+  ambiguous: 24
+  top_terms:
+    agent: 24
+    MCP: 2
+    AI agent: 1
+    AI: 1
+    Claude: 1
+    GPT: 1
+    LLMs: 1
+    chatbot: 1
