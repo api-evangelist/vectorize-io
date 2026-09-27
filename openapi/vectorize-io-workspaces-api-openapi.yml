@@ -56,6 +56,21 @@ paths:
         '404':
           $ref: '#/components/responses/Error'
 components:
+  parameters:
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
     ErrorResponse:
       type: object
@@ -74,21 +89,6 @@ components:
             type: string
       required:
       - error
-  responses:
-    Error:
-      description: Error response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    OrganizationId:
-      name: organizationId
-      in: path
-      required: true
-      description: Vectorize organization identifier.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

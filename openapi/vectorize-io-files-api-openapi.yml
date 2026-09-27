@@ -42,16 +42,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    StartFileUploadRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        contentType:
-          type: string
-      required:
-      - name
-      - contentType
     StartFileUploadResponse:
       type: object
       properties:
@@ -62,6 +52,16 @@ components:
       required:
       - fileId
       - uploadUrl
+    StartFileUploadRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        contentType:
+          type: string
+      required:
+      - name
+      - contentType
     ErrorResponse:
       type: object
       properties:
@@ -79,13 +79,6 @@ components:
             type: string
       required:
       - error
-  responses:
-    Error:
-      description: Error response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     OrganizationId:
       name: organizationId
@@ -94,6 +87,13 @@ components:
       description: Vectorize organization identifier.
       schema:
         type: string
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http
