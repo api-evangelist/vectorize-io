@@ -42,16 +42,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    StartFileUploadResponse:
-      type: object
-      properties:
-        fileId:
-          type: string
-        uploadUrl:
-          type: string
-      required:
-      - fileId
-      - uploadUrl
     StartFileUploadRequest:
       type: object
       properties:
@@ -79,6 +69,16 @@ components:
             type: string
       required:
       - error
+    StartFileUploadResponse:
+      type: object
+      properties:
+        fileId:
+          type: string
+        uploadUrl:
+          type: string
+      required:
+      - fileId
+      - uploadUrl
   parameters:
     OrganizationId:
       name: organizationId

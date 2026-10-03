@@ -83,17 +83,17 @@ paths:
                 $ref: '#/components/schemas/MessageResponse'
 components:
   parameters:
+    ConnectorId:
+      name: connectorId
+      in: path
+      required: true
+      schema:
+        type: string
     OrganizationId:
       name: organizationId
       in: path
       required: true
       description: Vectorize organization identifier.
-      schema:
-        type: string
-    ConnectorId:
-      name: connectorId
-      in: path
-      required: true
       schema:
         type: string
   schemas:

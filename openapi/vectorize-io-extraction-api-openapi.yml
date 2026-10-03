@@ -63,6 +63,14 @@ paths:
         '404':
           $ref: '#/components/responses/Error'
 components:
+  parameters:
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
   schemas:
     ExtractionResultResponse:
       type: object
@@ -73,16 +81,6 @@ components:
           $ref: '#/components/schemas/ExtractionResult'
       required:
       - ready
-    StartExtractionResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        extractionId:
-          type: string
-      required:
-      - message
-      - extractionId
     StartExtractionRequest:
       type: object
       properties:
@@ -134,6 +132,16 @@ components:
           type: string
       required:
       - success
+    StartExtractionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        extractionId:
+          type: string
+      required:
+      - message
+      - extractionId
     ErrorResponse:
       type: object
       properties:
@@ -151,14 +159,6 @@ components:
             type: string
       required:
       - error
-  parameters:
-    OrganizationId:
-      name: organizationId
-      in: path
-      required: true
-      description: Vectorize organization identifier.
-      schema:
-        type: string
   responses:
     Error:
       description: Error response.

@@ -250,13 +250,6 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    MessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-      - message
     StartDeepResearchRequest:
       type: object
       properties:
@@ -273,89 +266,23 @@ components:
           additionalProperties: true
       required:
       - query
-    StartDeepResearchResponse:
+    ErrorResponse:
       type: object
       properties:
-        researchId:
+        error:
           type: string
-      required:
-      - researchId
-    PipelineConfigurationSchema:
-      type: object
-      properties:
-        sourceConnectors:
-          type: array
-          minItems: 1
-          items:
-            type: object
-            description: A pipeline source connector reference and its configuration.
-            additionalProperties: true
-        destinationConnector:
-          type: object
-          description: The destination (vector database) connector for the pipeline.
-          additionalProperties: true
-        aiPlatformConnector:
-          type: object
-          description: The AI platform (embedding / model) connector for the pipeline.
-          additionalProperties: true
-        pipelineName:
+        details:
           type: string
-          minLength: 1
-        schedule:
-          type: object
-          description: Refresh schedule for the pipeline.
-          additionalProperties: true
-      required:
-      - sourceConnectors
-      - destinationConnector
-      - aiPlatformConnector
-      - pipelineName
-      - schedule
-    RetrieveDocumentsRequest:
-      type: object
-      properties:
-        question:
-          type: string
-        numResults:
-          type: number
-          minimum: 1
-        rerank:
-          type: boolean
-          default: true
-        metadata-filters:
+        failedUpdates:
           type: array
           items:
-            type: object
-            additionalProperties: {}
-        context:
-          type: object
-          description: Optional context object used for query rewriting.
-          additionalProperties: true
-        advanced-query:
-          type: object
-          description: Optional advanced-query configuration.
-          additionalProperties: true
-      required:
-      - question
-      - numResults
-    RetrieveDocumentsResponse:
-      type: object
-      properties:
-        question:
-          type: string
-        documents:
+            type: string
+        successfulUpdates:
           type: array
           items:
-            $ref: '#/components/schemas/Document'
-        average_relevancy:
-          type: number
-        ndcg:
-          type: number
+            type: string
       required:
-      - question
-      - documents
-      - average_relevancy
-      - ndcg
+      - error
     Document:
       type: object
       properties:
@@ -398,6 +325,84 @@ components:
       - unique_source
       - source_display_name
       additionalProperties: true
+    RetrieveDocumentsRequest:
+      type: object
+      properties:
+        question:
+          type: string
+        numResults:
+          type: number
+          minimum: 1
+        rerank:
+          type: boolean
+          default: true
+        metadata-filters:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        context:
+          type: object
+          description: Optional context object used for query rewriting.
+          additionalProperties: true
+        advanced-query:
+          type: object
+          description: Optional advanced-query configuration.
+          additionalProperties: true
+      required:
+      - question
+      - numResults
+    CreatePipelineResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+          required:
+          - id
+      required:
+      - message
+      - data
+    RetrieveDocumentsResponse:
+      type: object
+      properties:
+        question:
+          type: string
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        average_relevancy:
+          type: number
+        ndcg:
+          type: number
+      required:
+      - question
+      - documents
+      - average_relevancy
+      - ndcg
+    DeepResearchResultResponse:
+      type: object
+      properties:
+        ready:
+          type: boolean
+        data:
+          type: object
+          description: The generated deep research report when ready.
+          additionalProperties: true
+      required:
+      - ready
+    StartDeepResearchResponse:
+      type: object
+      properties:
+        researchId:
+          type: string
+      required:
+      - researchId
     PipelineListSummary:
       type: object
       properties:
@@ -436,23 +441,37 @@ components:
           - string
           - 'null'
       additionalProperties: true
-    ErrorResponse:
+    PipelineConfigurationSchema:
       type: object
       properties:
-        error:
-          type: string
-        details:
-          type: string
-        failedUpdates:
+        sourceConnectors:
           type: array
+          minItems: 1
           items:
-            type: string
-        successfulUpdates:
-          type: array
-          items:
-            type: string
+            type: object
+            description: A pipeline source connector reference and its configuration.
+            additionalProperties: true
+        destinationConnector:
+          type: object
+          description: The destination (vector database) connector for the pipeline.
+          additionalProperties: true
+        aiPlatformConnector:
+          type: object
+          description: The AI platform (embedding / model) connector for the pipeline.
+          additionalProperties: true
+        pipelineName:
+          type: string
+          minLength: 1
+        schedule:
+          type: object
+          description: Refresh schedule for the pipeline.
+          additionalProperties: true
       required:
-      - error
+      - sourceConnectors
+      - destinationConnector
+      - aiPlatformConnector
+      - pipelineName
+      - schedule
     GetPipelinesResponse:
       type: object
       properties:
@@ -465,32 +484,13 @@ components:
       required:
       - message
       - data
-    DeepResearchResultResponse:
-      type: object
-      properties:
-        ready:
-          type: boolean
-        data:
-          type: object
-          description: The generated deep research report when ready.
-          additionalProperties: true
-      required:
-      - ready
-    CreatePipelineResponse:
+    MessageResponse:
       type: object
       properties:
         message:
           type: string
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-          required:
-          - id
       required:
       - message
-      - data
   parameters:
     PipelineId:
       name: pipelineId
