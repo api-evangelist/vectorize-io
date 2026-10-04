@@ -110,6 +110,21 @@ paths:
                 $ref: '#/components/schemas/MessageResponse'
 components:
   schemas:
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+    ConnectorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        connectorId:
+          type: string
+      additionalProperties: true
     ErrorResponse:
       type: object
       properties:
@@ -127,21 +142,13 @@ components:
             type: string
       required:
       - error
-    ConnectorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        connectorId:
-          type: string
-      additionalProperties: true
-    MessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-      - message
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     OrganizationId:
       name: organizationId
@@ -156,13 +163,6 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    Error:
-      description: Error response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

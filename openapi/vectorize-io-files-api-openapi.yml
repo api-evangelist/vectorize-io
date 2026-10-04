@@ -79,6 +79,13 @@ components:
       required:
       - fileId
       - uploadUrl
+  responses:
+    Error:
+      description: Error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     OrganizationId:
       name: organizationId
@@ -87,13 +94,6 @@ components:
       description: Vectorize organization identifier.
       schema:
         type: string
-  responses:
-    Error:
-      description: Error response.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     bearerAuth:
       type: http

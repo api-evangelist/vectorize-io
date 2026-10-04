@@ -110,6 +110,21 @@ paths:
                 $ref: '#/components/schemas/MessageResponse'
 components:
   schemas:
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+    ConnectorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        connectorId:
+          type: string
+      additionalProperties: true
     ErrorResponse:
       type: object
       properties:
@@ -127,21 +142,6 @@ components:
             type: string
       required:
       - error
-    ConnectorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-        connectorId:
-          type: string
-      additionalProperties: true
-    MessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-      - message
   parameters:
     AIPlatformConnectorId:
       name: aiPlatformConnectorId
