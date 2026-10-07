@@ -248,6 +248,8 @@ apis:
   - type: Documentation
     url: https://docs.vectorize.io/build-deploy/extract-information/understanding-iris/
 common:
+- type: Pricing
+  url: https://vectorize.io/pricing
 - url: https://vectorize.io/feed.xml
   type: BlogRSS
 - type: AgenticAccess
