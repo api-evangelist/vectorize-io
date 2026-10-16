@@ -2,15 +2,21 @@
   "repo": "vectorize-io",
   "feeds": [
     {
-      "source": "https://blog.vectorize.io/feed",
+      "source": "https://blog.vectorize.io/feed/",
       "feed_url": "https://blog.vectorize.io/feed/",
-      "title": "Vectorize",
+      "title": "",
       "saved": 0,
-      "nature": "vendor-blog",
-      "nature_basis": "blog_subdomain"
+      "method": "feed"
+    },
+    {
+      "source": "https://vectorize.io/feed.xml",
+      "feed_url": "https://vectorize.io/feed.xml",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "fetched": "2026-10-03T12:15:37Z",
+  "fetched": "2026-10-10T13:15:00Z",
   "post_count": 12,
   "feed_nature": "vendor-blog",
   "feed_nature_basis": "blog_subdomain",
