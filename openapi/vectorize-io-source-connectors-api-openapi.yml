@@ -171,14 +171,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
 components:
+  parameters:
+    SourceConnectorId:
+      name: sourceConnectorId
+      in: path
+      required: true
+      schema:
+        type: string
+    OrganizationId:
+      name: organizationId
+      in: path
+      required: true
+      description: Vectorize organization identifier.
+      schema:
+        type: string
   schemas:
-    MessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-      - message
     ConnectorResponse:
       type: object
       properties:
@@ -187,6 +194,13 @@ components:
         connectorId:
           type: string
       additionalProperties: true
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
     ErrorResponse:
       type: object
       properties:
@@ -211,20 +225,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-  parameters:
-    OrganizationId:
-      name: organizationId
-      in: path
-      required: true
-      description: Vectorize organization identifier.
-      schema:
-        type: string
-    SourceConnectorId:
-      name: sourceConnectorId
-      in: path
-      required: true
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

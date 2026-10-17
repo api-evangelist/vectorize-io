@@ -250,22 +250,34 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
-    StartDeepResearchRequest:
+    DeepResearchResultResponse:
       type: object
       properties:
-        query:
-          type: string
-        webSearch:
+        ready:
           type: boolean
-          default: false
-        schema:
-          type: string
-        n8n:
+        data:
           type: object
-          description: Optional n8n workflow configuration.
+          description: The generated deep research report when ready.
           additionalProperties: true
       required:
-      - query
+      - ready
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+        failedUpdates:
+          type: array
+          items:
+            type: string
+        successfulUpdates:
+          type: array
+          items:
+            type: string
+      required:
+      - error
     PipelineListSummary:
       type: object
       properties:
@@ -304,28 +316,31 @@ components:
           - string
           - 'null'
       additionalProperties: true
-    MessageResponse:
+    RetrieveDocumentsResponse:
       type: object
       properties:
-        message:
+        question:
           type: string
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Document'
+        average_relevancy:
+          type: number
+        ndcg:
+          type: number
       required:
-      - message
-    CreatePipelineResponse:
+      - question
+      - documents
+      - average_relevancy
+      - ndcg
+    StartDeepResearchResponse:
       type: object
       properties:
-        message:
+        researchId:
           type: string
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-          required:
-          - id
       required:
-      - message
-      - data
+      - researchId
     RetrieveDocumentsRequest:
       type: object
       properties:
@@ -353,6 +368,29 @@ components:
       required:
       - question
       - numResults
+    StartDeepResearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        webSearch:
+          type: boolean
+          default: false
+        schema:
+          type: string
+        n8n:
+          type: object
+          description: Optional n8n workflow configuration.
+          additionalProperties: true
+      required:
+      - query
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
     PipelineConfigurationSchema:
       type: object
       properties:
@@ -426,17 +464,6 @@ components:
       - unique_source
       - source_display_name
       additionalProperties: true
-    DeepResearchResultResponse:
-      type: object
-      properties:
-        ready:
-          type: boolean
-        data:
-          type: object
-          description: The generated deep research report when ready.
-          additionalProperties: true
-      required:
-      - ready
     GetPipelinesResponse:
       type: object
       properties:
@@ -449,48 +476,21 @@ components:
       required:
       - message
       - data
-    RetrieveDocumentsResponse:
+    CreatePipelineResponse:
       type: object
       properties:
-        question:
+        message:
           type: string
-        documents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Document'
-        average_relevancy:
-          type: number
-        ndcg:
-          type: number
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+          required:
+          - id
       required:
-      - question
-      - documents
-      - average_relevancy
-      - ndcg
-    ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-        details:
-          type: string
-        failedUpdates:
-          type: array
-          items:
-            type: string
-        successfulUpdates:
-          type: array
-          items:
-            type: string
-      required:
-      - error
-    StartDeepResearchResponse:
-      type: object
-      properties:
-        researchId:
-          type: string
-      required:
-      - researchId
+      - message
+      - data
   parameters:
     PipelineId:
       name: pipelineId

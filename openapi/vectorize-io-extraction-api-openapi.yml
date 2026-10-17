@@ -64,6 +64,15 @@ paths:
           $ref: '#/components/responses/Error'
 components:
   schemas:
+    ExtractionResultResponse:
+      type: object
+      properties:
+        ready:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/ExtractionResult'
+      required:
+      - ready
     StartExtractionResponse:
       type: object
       properties:
@@ -125,15 +134,6 @@ components:
           type: string
       required:
       - success
-    ExtractionResultResponse:
-      type: object
-      properties:
-        ready:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/ExtractionResult'
-      required:
-      - ready
     ErrorResponse:
       type: object
       properties:
