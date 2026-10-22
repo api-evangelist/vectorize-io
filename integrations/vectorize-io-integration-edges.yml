@@ -1,21 +1,4 @@
 edges:
-- partner_name: Zoom (own)
-  partner: zoom
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://marketplace.zoom.us/apps/4X9e2vrnTwqHYTnhqipOEg
-  mirror_of: zoom/integrations/zoom-integration-edges.yml
-  apps:
-  - Vectorize Admin
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: Zoom app
 - partner_name: Agent Skills (own GitHub org)
   partner: null
   partner_match: register
@@ -111,6 +94,40 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-agent-skills.py
   first_seen: '2026-10-20'
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/4X9e2vrnTwqHYTnhqipOEg
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Vectorize Admin
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
+- partner_name: Obsidian (obsidian-community-plugins)
+  partner: obsidian
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: obsidian-community-plugins
+  evidence: https://github.com/vectorize-io/hindsight-obsidian
+  mirror_of: obsidian/integrations/obsidian-integration-edges.yml
+  apps:
+  - Hindsight
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Obsidian community plugin
 generated: '2026-10-18'
 method: searched
 source:
@@ -123,3 +140,4 @@ checked:
 - https://officialskills.sh/sitemap.xml
 - https://skillsmp.com/sitemap.xml
 - https://www.skills.sh/sitemap.xml
+- obsidian/integrations/obsidian-integration-edges.yml
